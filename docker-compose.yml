@@ -1,0 +1,24 @@
+version: '2'
+
+services:
+    web:
+        image: nginx
+        environment:
+            - TERM=xterm
+        volumes:
+            - ./docker/nginx/default.conf:/etc/nginx/conf.g/default.conf
+            - .:/www
+        ports:
+            - "8080:80"
+        links:
+            - php
+
+    php:
+        image: tuxmate/php:7.0
+        tty: true
+        environment:
+            - TERM=xterm
+        volumes:
+            - ./docker/php/www.conf:/etc/php7/fpm/pool.d/www.conf
+            - ./docker/php/php.ini:/etc/php7/fpm/php.ini
+            - .:/www
